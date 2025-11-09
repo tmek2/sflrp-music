@@ -5,6 +5,15 @@ const fs = require('fs');
 const path = require('path');
 const { E } = require('./utils/emojis');
 require('dotenv').config();
+// Minimal HTTP server to bind PORT for Render web service
+const http = require('http');
+const keepAlivePort = process.env.PORT || 3000;
+http.createServer((req, res) => {
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.end('OK');
+}).listen(keepAlivePort, () => {
+    console.log(`HTTP keepalive listening on port ${keepAlivePort}`);
+});
 
 class MusicBot extends Client {
     constructor() {
